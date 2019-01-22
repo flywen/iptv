@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.core.dao.ChannelClassDao">
+    <resultMap type="ChannelClass" id="ChannelClassResult">
+        <result property="id" column="id"/>
+        <result property="className" column="className"/>
+        <result property="desc" column="desc"/>
+    </resultMap>
+
+    <select id="findChannelClass" parameterType="Map" resultMap="ChannelClassResult">
+        select * from iptv_channelclass
+    </select>
+
+    <insert id="addChannelClass" parameterType="ChannelClass">
+        insert into iptv_channelclass(className, `desc`) values (#{className},#{desc})
+    </insert>
+
+    <delete id="deleteChannelClass" parameterType="Integer">
+        delete from iptv_channelclass where id=#{id}
+    </delete>
+
+    <update id="updataChannelClass" parameterType="ChannelClass">
+        update iptv_channelclass set className=#{className}, `desc`=#{desc} where id=#{id}
+    </update>
+
+</mapper>

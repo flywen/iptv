@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.core.dao.ChannelDao">
+    <resultMap type="Channel" id="ChannelResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="in_url" column="in_url"/>
+        <result property="format" column="format"/>
+        <result property="codec" column="codec"/>
+        <result property="out_url" column="out_url"/>
+        <result property="status" column="status"/>
+        <result property="ismulticast" column="ismulticast"/>
+        <result property="className" column="className"/>
+        <!--<association property="Server" javaType="com.core.entity.Server">-->
+            <!--<result property="id" column="id"/>-->
+            <!--<result property="name" column="name"/>-->
+            <!--<result property="ipAddress" column="ipAddress"/>-->
+        <!--</association>-->
+    </resultMap>
+
+    <select id="findChannel" parameterType="Map" resultMap="ChannelResult">
+        select * from iptv_channel c,iptv_channelclass cc where cc.id=c.class_id order by c.id
+--         select * from iptv_channel order by ${id}
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+
+    </select>
+
+    <select id="totalChannel" resultType="int">
+        select count(*) from iptv_channel
+    </select>
+
+    <insert id="addChannel" parameterType="Channel">
+        insert into iptv_channel(name, in_url,format,codec,out_url,status,class_id)
+        values (#{name},#{in_url},#{format},#{codec},#{out_url},#{status},#{class_id})
+    </insert>
+
+    <update id="updataChannel" parameterType="Channel">
+        update iptv_channel set name=#{name}, in_url=#{in_url}, format=#{format}, codec=#{codec}, out_url=#{out_url}, status=#{status}, class_id=#{class_id} where id=#{id}
+    </update>
+
+    <delete id="deleteChannel" parameterType="Integer">
+        delete from iptv_channel where id=#{id}
+    </delete>
+
+</mapper>

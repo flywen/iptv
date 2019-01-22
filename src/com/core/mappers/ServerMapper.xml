@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.core.dao.ServerDao">
+    <resultMap type="Server" id="ServerResult">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="ipAddress" column="ipAddress"/>
+    </resultMap>
+
+    <select id="findServer" parameterType="Map" resultMap="ServerResult">
+        select * from iptv_server
+    </select>
+
+    <insert id="addServer" parameterType="Server">
+        insert into iptv_server(name, ipAddress) values (#{name},#{ipAddress})
+    </insert>
+
+    <delete id="deleteServer" parameterType="Integer">
+        delete from iptv_server where id=#{id}
+    </delete>
+
+    <update id="updataServer" parameterType="Server">
+        update iptv_server set name=#{name}, ipAddress=#{ipAddress} where id=#{id}
+    </update>
+
+</mapper>
